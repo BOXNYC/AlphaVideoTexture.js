@@ -39,6 +39,7 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
   // Set Attributes:
   
   this.video = options.videoElement = processVideoElement( options.videoElement );
+  this.video.currentTime = 0.001;
   
   this.renderEvery = options.renderEvery;
   
