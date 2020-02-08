@@ -65,9 +65,11 @@ const options = {
 const texture = new AlphaVideoTexture( videos, options );
 ```
 ## TODO
-1. Test Android Chrome
-2. Test Android Web Browser
-3. OSX Chrome - First render is black. Prob needs to wait for video data before render.
+1. OSX Chrome - First render is black. Prob needs to wait for video data before render.
+2. Needed tests:
+   - Android Chrome
+   - Android Web Browser
+   - Windows Edge
 
 ## Tests
 - MacOS 10.14.6 √
