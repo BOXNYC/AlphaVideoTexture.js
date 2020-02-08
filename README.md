@@ -63,6 +63,4 @@ const options = {
 const texture = new AlphaVideoTexture( videos, options );
 ```
 
-### TODO
-1. Use src when alphaVideo option is not set and alpha channel video is supported.
-2. Fallback if no video sources are added.
+
