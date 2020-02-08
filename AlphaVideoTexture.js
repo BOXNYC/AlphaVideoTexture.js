@@ -2,6 +2,12 @@
   https://github.com/BOXNYC/AlphaVideoTexture.js/
   **/
 
+if ( typeof THREE === 'undefined' ) {
+  THREE = window;
+  eval("import { RGBAFormat, LinearFilter, NearestFilter } from '../constants.js';");
+  eval("import { Texture } from './Texture.js';");
+}
+
 AlphaVideoTextureImageTexture = {
   
   VIDEO: 'VIDEO',
@@ -294,3 +300,5 @@ AlphaVideoTexture.prototype = Object.assign( Object.create( THREE.Texture.protot
   }
 
 } );
+
+if ( THREE == window ) eval("export { AlphaVideoTexture };");
