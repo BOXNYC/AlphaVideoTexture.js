@@ -65,15 +65,14 @@ const options = {
 const texture = new AlphaVideoTexture( videos, options );
 ```
 ## TODO
-1. OSX Chrome - First render is black. Prob needs to wait for video data before render.
-2. Needed tests:
+1. Needed tests:
    - Android Chrome
    - Android Web Browser
    - Windows Edge
 
 ## Tests
 - MacOS 10.14.6 √
-  - Chrome 80.0.3987.87 x `!Renders black on init`
+  - Chrome 80.0.3987.87 √
   - FireFox 72.0.2 √
   - Safari 13.0.5 √
 - iOS 13.3
