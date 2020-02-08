@@ -21,6 +21,7 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
   src = src || [];
   if ( typeof src === 'string' ) src = src.split(/\s*\,\s*/g);
   src = processSrc( src );
+  if ( !src.length ) return console.error( 'No sources.' );
 
   options = options || {};
   options.renderEvery = options.renderEvery || 1;
@@ -33,13 +34,11 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
   
   // Set Attributes:
   
-  this.video = options.videoElement || function(){
-    var v = document.createElement('video');
-    v.autoplay = true; v.setAttribute('autoplay', 'autoplay');
-    v.playsinline = true; v.setAttribute('playsinline', 'playsinline'); v.setAttribute('webkit-playsinline', 'playsinline');
-    v.loop = options.loop || false; if (v.loop) v.setAttribute('loop', 'loop');
-    return v;
-  }();
+  this.video = options.videoElement = processVideoElement( options.videoElement );
+  
+  this.renderEvery = options.renderEvery;
+  
+  this.quality = options.quality;
   
   // Private vars:
   
@@ -48,45 +47,60 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
       displayCanvas = null,
       display = null,
       lastDrawnFrameTime = null,
-      canvasesAdded = false,
       renderCount = 0;
   
   // Public methods:
   
-  this.processPixels = function( video, width, height ) {
+  this.processPixels = function() {
     
-    if ( options.quality != 1 ) {
+    if ( this.renderEvery != options.renderEvery ) {
       
-      width *= options.quality;
-      height *= options.quality;
-      
+      options.renderEvery = this.renderEvery;
+      renderCount = 0;
+    
     }
     
-    if (!canvasesAdded) {
+    if ( this.video != options.videoElement ) options.videoElement = processVideoElement( this.video );
+    
+    var currentFrameTime = this.video.currentTime;
+    
+    if ( lastDrawnFrameTime !== currentFrameTime && this.video.readyState > 1 && !renderCount ) {
       
-      bufferCanvas = document.createElement( 'canvas' );
-      bufferCanvas.width = width;
-      bufferCanvas.height = height * 2;
-      buffer = bufferCanvas.getContext( '2d' );
+      var image, alphaData, i, len, currentFrameTime = this.video.currentTime;
       
-      if ( scope.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
+      if ( this.quality != options.quality ) options.quality = this.quality;
+      
+      var width = options.size.width,
+          height = options.size.height;
+      
+      if ( options.quality != 1 ) {
         
-        displayCanvas = document.createElement( 'canvas' );
-        displayCanvas.width = width
-        displayCanvas.height = height;
-        display = displayCanvas.getContext( '2d' );
+        width *= options.quality;
+        height *= options.quality;
         
       }
       
-      canvasesAdded = true;
+      if ( !bufferCanvas ) {
+        
+        bufferCanvas = document.createElement( 'canvas' );
+        bufferCanvas.width = width;
+        bufferCanvas.height = height * 2;
+        buffer = bufferCanvas.getContext( '2d' );
+        
+        if ( scope.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
+          
+          displayCanvas = document.createElement( 'canvas' );
+          displayCanvas.width = width
+          displayCanvas.height = height;
+          display = displayCanvas.getContext( '2d' );
+          
+        }
+        
+      }
       
-    }
-    
-    var image, alphaData, i, len, currentFrameTime = video.currentTime;
-    
-    if ( lastDrawnFrameTime !== currentFrameTime && video.readyState > 1 && !renderCount ) {
+      var image, alphaData, i, len;
       
-      buffer.drawImage( video, 0, 0, width, height * 2 ); //scales if <video>-dimensions are not matching
+      buffer.drawImage( this.video, 0, 0, width, height * 2 ); //scales if <video>-dimensions are not matching
       
       image = buffer.getImageData(0, 0, width, height);
       alphaData = buffer.getImageData(0, height, width, height).data;
@@ -143,6 +157,11 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
       delete options.alphaVideo;
     }
     
+    if ( typeof srcData.length === 'length' ) delete srcData.length;
+    var length = 0;
+    for( var type in srcData ) length++;
+    srcData.length = length;
+    
     return srcData;
   
   }
@@ -163,6 +182,27 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
     
     return size;
     
+  }
+  
+  function processVideoElement( videoElement ) {
+    
+    if ( videoElement ) return videoElement;
+    
+    var v = document.createElement('video');
+    
+    v.autoplay = true;
+    v.setAttribute('autoplay', 'autoplay');
+    
+    v.playsinline = true;
+    v.setAttribute('playsinline', 'playsinline');
+    v.setAttribute('webkit-playsinline', 'playsinline');
+    
+    v.loop = options.loop || false; if (v.loop) v.setAttribute('loop', 'loop');
+    
+    videoElement = v;
+    
+    return v;
+  
   }
   
   // Begin:
@@ -187,7 +227,7 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
       
       this.imageTexture = AlphaVideoTextureImageTexture.CANVAS;
       
-      this.processPixels( this.video, options.size.width, options.size.height );
+      this.processPixels();
       
       AlphaVideoTexture.prototype.isCanvasTexture = true;
       THREE.Texture.call( this, displayCanvas, mapping, wrapS, wrapT, magFilter, minFilter, THREE.RGBAFormat, type, anisotropy );
@@ -201,8 +241,6 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
       AlphaVideoTexture.prototype.isDataTexture = true;
       THREE.Texture.call( this, null, mapping, wrapS, wrapT, magFilter, minFilter, THREE.RGBAFormat, type, anisotropy );
       
-      this.processPixels( this.video, options.size.width, options.size.height );
-      
       if ( options.antialiasData ) {
         this.generateMipmaps = true;
       } else {
@@ -214,7 +252,7 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
       this.flipY = true;
       this.unpackAlignment = 1;
       
-      this.processPixels( this.video, 1024, 1024 );
+      this.processPixels();
       if ( this.image ) this.needsUpdate = true;
       
     }
@@ -248,7 +286,7 @@ AlphaVideoTexture.prototype = Object.assign( Object.create( THREE.Texture.protot
     
     if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
             
-      this.processPixels( video, this.options.size.width, this.options.size.height );
+      this.processPixels();
       if ( this.image ) this.needsUpdate = true;
 
     }
