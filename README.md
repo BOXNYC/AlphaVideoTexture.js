@@ -5,10 +5,11 @@ Three.js Alpha Channel Video Texture. Renders a VideoTexture when alpha channel 
 https://github.com/m90/seeThru
 
 ## Arguments
-src: [Array] An array of video file paths in formats .mp4, .m4v, .ogv, and webm
+src: * [Array] An array of video file paths in formats .mp4, .m4v, .ogv, and webm
 
 options: [Object] Settings object.
-  - alphaVideo: [string] Path to a true alpha channel video. Will be used if when supported.
+  - alphaVideo: [string] Path to a true alpha channel video. Will be used if supported.
+  - videoElement: [HTMLVideoElement] The Video element you wish to render on the texture. Default is a dynamically generated tag, not inserted in the DOM.
   - renderEvery: [int] Determine how many frames get rendered. Example, set to 2 to rendere every other frame. Default 1.
   - quality: [float] 0.0 - 1.0 percent quality. Example, 0.5 is 50% quality. Warning, if the fallback imageTexture is DATA, the quality option must be set to a foldable percent, for example .75 .5, .25, .125, etc. If not, the texture will distort non-uniformly. Default 1.0.
   - fallbackImageTexture: [string] Options: AlphaVideoTextureImageTexture.DATA & AlphaVideoTextureImageTexture.CANVAS. Explained below.
@@ -61,4 +62,4 @@ const texture = new AlphaVideoTexture( videos, options );
 ### TODO
 1. Use src when alphaVideo option is not set and alpha channel video is supported.
 2. See if changing .option attribute values changes real-time.
-3. 
+3. Fallback if no video sources are added.
