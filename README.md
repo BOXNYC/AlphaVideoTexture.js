@@ -34,19 +34,19 @@ anisotropy: See documentation for THREE.Texture
 ## Example
 ```javascript
 const videos = [
-  'videos/TestFootage_wAlpha'+(low?'.low':'')+'.mp4',
-  'videos/TestFootage_wAlpha'+(low?'.low':'')+'.m4v',
-  'videos/TestFootage_wAlpha'+(low?'.low':'')+'.ogv',
-  'videos/TestFootage_wAlpha'+(low?'.low':'')+'.webm'
+  'videos/seethru.mp4',
+  'videos/seethru.m4v',
+  'videos/seethru.ogv',
+  'videos/seethru.webm'
 ];
 const options = {
   alphaVideo: 'videos/true-alpha-video.webm',
-  quality: query('quality', 0.5),
-  renderEvery: query('renderEvery', 3),
+  quality: 0.5,
+  renderEvery: 3,
   loop: true,
   fallbackImageTexture: AlphaVideoTextureImageTexture[query('image', 'DATA')],
-  antialiasData: query('antialiasData', true),
-  size: low ? 512 : 1024
+  antialiasData: true,
+  size: 512
 };
 const texture = new AlphaVideoTexture( videos, options );
 ```
