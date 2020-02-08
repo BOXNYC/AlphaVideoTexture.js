@@ -71,9 +71,9 @@ const texture = new AlphaVideoTexture( videos, options );
 
 ## Tests
 - MacOS 10.14.6 √
- - Chrome 80.0.3987.87 x `!Renders black on init`
- - FireFox 72.0.2 √
- - Safari 13.0.5 √
+  - Chrome 80.0.3987.87 x `!Renders black on init`
+  - FireFox 72.0.2 √
+  - Safari 13.0.5 √
 - iOS 13.3
- - Safari √
- - Chrome √
+  - Safari √
+  - Chrome √
