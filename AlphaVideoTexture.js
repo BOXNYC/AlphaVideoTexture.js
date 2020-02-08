@@ -40,84 +40,84 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
     v.loop = options.loop || false; if (v.loop) v.setAttribute('loop', 'loop');
     return v;
   }();
-	
-	// Private vars:
-	
-	var bufferCanvas = null,
-    	buffer = null,
-    	displayCanvas = null,
-    	display = null,
-    	lastDrawnFrameTime = null,
-    	canvasesAdded = false,
-    	renderCount = 0;
+  
+  // Private vars:
+  
+  var bufferCanvas = null,
+      buffer = null,
+      displayCanvas = null,
+      display = null,
+      lastDrawnFrameTime = null,
+      canvasesAdded = false,
+      renderCount = 0;
   
   // Public methods:
   
-	this.processPixels = function( video, width, height ) {
-  	
-  	if ( options.quality != 1 ) {
-    	
-    	width *= options.quality;
-    	height *= options.quality;
-    	
+  this.processPixels = function( video, width, height ) {
+    
+    if ( options.quality != 1 ) {
+      
+      width *= options.quality;
+      height *= options.quality;
+      
     }
-  	
-  	if (!canvasesAdded) {
-    	
-    	bufferCanvas = document.createElement( 'canvas' );
-    	bufferCanvas.width = width;
-    	bufferCanvas.height = height * 2;
-    	buffer = bufferCanvas.getContext( '2d' );
-    	
-    	if ( scope.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
-      	
-      	displayCanvas = document.createElement( 'canvas' );
-      	displayCanvas.width = width
-      	displayCanvas.height = height;
-      	display = displayCanvas.getContext( '2d' );
-      	
-    	}
-    	
-    	canvasesAdded = true;
-    	
-  	}
-  	
-		var image, alphaData, i, len, currentFrameTime = video.currentTime;
-		
-		if ( lastDrawnFrameTime !== currentFrameTime && video.readyState > 1 && !renderCount ) {
-			
-			buffer.drawImage( video, 0, 0, width, height * 2 ); //scales if <video>-dimensions are not matching
-			
-			image = buffer.getImageData(0, 0, width, height);
-			alphaData = buffer.getImageData(0, height, width, height).data;
-			
-			for (i = 3, len = image.data.length; i < len; i = i + 4)
-  			image.data[i] = Math.max( alphaData[i - 1], alphaData[i - 2], alphaData[i - 3] );
-			
-			if ( scope.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
-  			
-  			display.putImageData( image, 0, 0, 0, 0, width, height );
-  			
-			} else if ( scope.imageTexture == AlphaVideoTextureImageTexture.DATA ) {
-  			
-  			var data = new Uint8Array( image.data.buffer );
-  			scope.image = { data: data || null, width: width || 1, height: height || 1 };
-  			
-			}
-			
-			lastDrawnFrameTime = currentFrameTime;
-			
-		}
-		
-		renderCount = renderCount >= options.renderEvery ? 0 : renderCount + 1;
-		
-	}
-	
-	// Private methods
-	
-	function processSrc( src ) {
-  	
-  	var srcData = {};
+    
+    if (!canvasesAdded) {
+      
+      bufferCanvas = document.createElement( 'canvas' );
+      bufferCanvas.width = width;
+      bufferCanvas.height = height * 2;
+      buffer = bufferCanvas.getContext( '2d' );
+      
+      if ( scope.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
+        
+        displayCanvas = document.createElement( 'canvas' );
+        displayCanvas.width = width
+        displayCanvas.height = height;
+        display = displayCanvas.getContext( '2d' );
+        
+      }
+      
+      canvasesAdded = true;
+      
+    }
+    
+    var image, alphaData, i, len, currentFrameTime = video.currentTime;
+    
+    if ( lastDrawnFrameTime !== currentFrameTime && video.readyState > 1 && !renderCount ) {
+      
+      buffer.drawImage( video, 0, 0, width, height * 2 ); //scales if <video>-dimensions are not matching
+      
+      image = buffer.getImageData(0, 0, width, height);
+      alphaData = buffer.getImageData(0, height, width, height).data;
+      
+      for (i = 3, len = image.data.length; i < len; i = i + 4)
+        image.data[i] = Math.max( alphaData[i - 1], alphaData[i - 2], alphaData[i - 3] );
+      
+      if ( scope.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
+        
+        display.putImageData( image, 0, 0, 0, 0, width, height );
+        
+      } else if ( scope.imageTexture == AlphaVideoTextureImageTexture.DATA ) {
+        
+        var data = new Uint8Array( image.data.buffer );
+        scope.image = { data: data || null, width: width || 1, height: height || 1 };
+        
+      }
+      
+      lastDrawnFrameTime = currentFrameTime;
+      
+    }
+    
+    renderCount = renderCount >= options.renderEvery ? 0 : renderCount + 1;
+    
+  }
+  
+  // Private methods
+  
+  function processSrc( src ) {
+    
+    var srcData = {};
     
     for ( var index in src ) {
       
@@ -144,12 +144,12 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
     }
     
     return srcData;
-	
-	}
-	
-	function processSize( size ) {
-  	
-  	if ( typeof size !== 'object' ) {
+  
+  }
+  
+  function processSize( size ) {
+    
+    if ( typeof size !== 'object' ) {
       
       if (  typeof size === 'string' && size.match(/\s*[0-9]{1,}\s*x\s*[0-9]{1,}\s*/i) )
          options.size = JSON.parse( '{"width":'+size.replace(/\s*x\s*/i, ',"height":')+'}' );
@@ -163,9 +163,9 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
     
     return size;
     
-	}
-	
-	// Begin:
+  }
+  
+  // Begin:
   
   var chromeVersion = function() {     
         var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);        
@@ -202,17 +202,17 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
       THREE.Texture.call( this, null, mapping, wrapS, wrapT, magFilter, minFilter, THREE.RGBAFormat, type, anisotropy );
       
       this.processPixels( this.video, options.size.width, options.size.height );
-    	
-    	if ( options.antialiasData ) {
-      	this.generateMipmaps = true;
-    	} else {
-      	this.magFilter = magFilter !== undefined ? magFilter : THREE.NearestFilter;
-      	this.minFilter = minFilter !== undefined ? minFilter : THREE.NearestFilter;
-      	this.generateMipmaps = false;
-    	}
-    	
-    	this.flipY = true;
-    	this.unpackAlignment = 1;
+      
+      if ( options.antialiasData ) {
+        this.generateMipmaps = true;
+      } else {
+        this.magFilter = magFilter !== undefined ? magFilter : THREE.NearestFilter;
+        this.minFilter = minFilter !== undefined ? minFilter : THREE.NearestFilter;
+        this.generateMipmaps = false;
+      }
+      
+      this.flipY = true;
+      this.unpackAlignment = 1;
       
       this.processPixels( this.video, 1024, 1024 );
       if ( this.image ) this.needsUpdate = true;
@@ -228,9 +228,9 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
     
     THREE.Texture.call( scope, this.video, mapping, wrapS, wrapT, magFilter, minFilter, THREE.RGBAFormat, type, anisotropy );
     this.format = format || THREE.RGBAFormat;
-  	this.minFilter = minFilter || THREE.LinearFilter;
-  	this.magFilter = magFilter || THREE.LinearFilter;
-  	this.generateMipmaps = false;
+    this.minFilter = minFilter || THREE.LinearFilter;
+    this.magFilter = magFilter || THREE.LinearFilter;
+    this.generateMipmaps = false;
     
   }
 
@@ -238,21 +238,21 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
 
 AlphaVideoTexture.prototype = Object.assign( Object.create( THREE.Texture.prototype ), {
 
-	constructor: AlphaVideoTexture,
+  constructor: AlphaVideoTexture,
 
-	isVideoTexture: true,
+  isVideoTexture: true,
 
-	update: function () {
-  	
-		var video = this.video;
-		
-		if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
+  update: function () {
+    
+    var video = this.video;
+    
+    if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
             
-			this.processPixels( video, this.options.size.width, this.options.size.height );
-			if ( this.image ) this.needsUpdate = true;
+      this.processPixels( video, this.options.size.width, this.options.size.height );
+      if ( this.image ) this.needsUpdate = true;
 
-		}
+    }
 
-	}
+  }
 
 } );
