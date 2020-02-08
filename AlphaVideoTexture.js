@@ -20,8 +20,6 @@ AlphaVideoTextureImageTexture = {
 
 function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy ) {
   
-  var scope = this;
-  
   // Process Arguments:
   
   src = src || [];
@@ -93,7 +91,7 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
         bufferCanvas.height = height * 2;
         buffer = bufferCanvas.getContext( '2d' );
         
-        if ( scope.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
+        if ( this.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
           
           displayCanvas = document.createElement( 'canvas' );
           displayCanvas.width = width
@@ -114,14 +112,14 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
       for (i = 3, len = image.data.length; i < len; i = i + 4)
         image.data[i] = Math.max( alphaData[i - 1], alphaData[i - 2], alphaData[i - 3] );
       
-      if ( scope.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
+      if ( this.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
         
         display.putImageData( image, 0, 0, 0, 0, width, height );
         
-      } else if ( scope.imageTexture == AlphaVideoTextureImageTexture.DATA ) {
+      } else if ( this.imageTexture == AlphaVideoTextureImageTexture.DATA ) {
         
         var data = new Uint8Array( image.data.buffer );
-        scope.image = { data: data || null, width: width || 1, height: height || 1 };
+        this.image = { data: data || null, width: width || 1, height: height || 1 };
         
       }
       
@@ -270,7 +268,7 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
     this.video.innerHTML = '<source src="'+src.webmAlpha+'" type="video/webm">';
     this.video.removeAttribute('style');
     
-    THREE.Texture.call( scope, this.video, mapping, wrapS, wrapT, magFilter, minFilter, THREE.RGBAFormat, type, anisotropy );
+    THREE.Texture.call( this, this.video, mapping, wrapS, wrapT, magFilter, minFilter, THREE.RGBAFormat, type, anisotropy );
     this.format = format || THREE.RGBAFormat;
     this.minFilter = minFilter || THREE.LinearFilter;
     this.magFilter = magFilter || THREE.LinearFilter;
