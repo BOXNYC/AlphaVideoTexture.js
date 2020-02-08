@@ -13,7 +13,7 @@ options: [Object] Settings object.
   - quality: [float] 0.0 - 1.0 percent quality. Example, 0.5 is 50% quality. Warning, if the fallback imageTexture is DATA, the quality option must be set to a foldable percent, for example .75 .5, .25, .125, etc. If not, the texture will distort non-uniformly. Default 1.0.
   - fallbackImageTexture: [string] Options: AlphaVideoTextureImageTexture.DATA & AlphaVideoTextureImageTexture.CANVAS. Explained below.
   - antialiasData: [bool] If fallbackImageTexture is set to DATA, then antialias is set. Default true.
-  - size: [Mixed] Sets the size of the rendered video texture. Posible format examples: 1024, [512,512], {width:1024,height:1024}, "512x512"
+  - size: [Mixed] Sets the size of the rendered video texture. Posible format examples: 1024, [512,512], {width:1024,height:1024}, "512x512". Size and video size must be at a power of 2. Default 512x512;
   
 mapping: See documentation for THREE.Texture
 
@@ -30,6 +30,13 @@ format: See documentation for THREE.Texture
 type: See documentation for THREE.Texture
 
 anisotropy: See documentation for THREE.Texture
+
+## Attributes
+.video: [HTMLVideoElement] The video tag element being rendered.
+
+.image: [Mixed] Will either be an HTMLVideoElement, HTMLCanvasElement, or ImageData Object.
+
+.options: [Object] The rendered options argument.
 
 ## Useage
 ```javascript
@@ -53,3 +60,5 @@ const texture = new AlphaVideoTexture( videos, options );
 
 ### TODO
 1. Use src when alphaVideo option is not set and alpha channel video is supported.
+2. See if changing .option attribute values changes real-time.
+3. 
