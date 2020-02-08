@@ -16,21 +16,21 @@ options: [Object] Settings object.
   - antialiasData: [bool] If fallbackImageTexture is set to DATA, then antialias is set. Default true.
   - size: [Mixed] Sets the size of the rendered video texture. Posible format examples: 1024, [512,512], {width:1024,height:1024}, "512x512". Size and video size must be at a power of 2. Default 512x512;
   
-mapping: See documentation for THREE.Texture
+mapping: https://threejs.org/docs/#api/en/textures/Texture.mapping
 
-wrapS: See documentation for THREE.Texture
+wrapS: https://threejs.org/docs/#api/en/textures/Texture.wrapS
 
-wrapT: See documentation for THREE.Texture
+wrapT: https://threejs.org/docs/#api/en/textures/Texture.wrapT
 
-magFilter: See documentation for THREE.Texture
+magFilter: https://threejs.org/docs/#api/en/textures/Texture.magFilter
 
-minFilter: See documentation for THREE.Texture
+minFilter: https://threejs.org/docs/#api/en/textures/Texture.minFilter
 
-format: See documentation for THREE.Texture
+format: https://threejs.org/docs/#api/en/textures/Texture.format
 
-type: See documentation for THREE.Texture
+type: https://threejs.org/docs/#api/en/textures/Texture.type
 
-anisotropy: See documentation for THREE.Texture
+anisotropy: https://threejs.org/docs/#api/en/textures/Texture.anisotropy
 
 ## Attributes
 .video: [HTMLVideoElement] The video tag element being rendered.
