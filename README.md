@@ -32,7 +32,7 @@ type: See documentation for THREE.Texture
 anisotropy: See documentation for THREE.Texture
 
 ## Example
-`JavaScript
+```javascript
 const videos = [
   'videos/TestFootage_wAlpha'+(low?'.low':'')+'.mp4',
   'videos/TestFootage_wAlpha'+(low?'.low':'')+'.m4v',
@@ -49,7 +49,7 @@ const options = {
   size: low ? 512 : 1024
 };
 const texture = new AlphaVideoTexture( videos, options );
-`
+```
 
 ### TODO
 1. Use src when alphaVideo option is not set and alpha channel video is supported.
