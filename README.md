@@ -10,7 +10,7 @@ src: [Array] An array of video file paths in formats .mp4, .m4v, .ogv, and webm
 options: [Object] Settings object.
   - alphaVideo: [string] Path to a true alpha channel video. Will be used if when supported.
   - renderEvery: [int] Determine how many frames get rendered. Example, set to 2 to rendere every other frame. Default 1.
-  - quality: [float] 0.0 - 1.0 percent quality. Example, 0.5 is 50% quality. Warning, is imageTexture is DATA, the quality option must be set to a foldable percent, for examples .75 .5, .25, .125, etc. Default 1.0.
+  - quality: [float] 0.0 - 1.0 percent quality. Example, 0.5 is 50% quality. Warning, if the fallback imageTexture is DATA, the quality option must be set to a foldable percent, for example .75 .5, .25, .125, etc. If not, the texture will distort non-uniformly. Default 1.0.
   - fallbackImageTexture: [string] Options: AlphaVideoTextureImageTexture.DATA & AlphaVideoTextureImageTexture.CANVAS. Explained below.
   - antialiasData: [bool] If fallbackImageTexture is set to DATA, then antialias is set. Default true.
   - size: [Mixed] Sets the size of the rendered video texture. Posible format examples: 1024, [512,512], {width:1024,height:1024}, "512x512"
