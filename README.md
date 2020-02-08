@@ -39,6 +39,10 @@ anisotropy: https://threejs.org/docs/#api/en/textures/Texture.anisotropy
 
 .options: [Object] The rendered options argument.
 
+.renderEvery: [int] See in options.
+
+.quality: [float] See in options.
+
 ## Useage
 ```javascript
 const videos = [
@@ -61,5 +65,4 @@ const texture = new AlphaVideoTexture( videos, options );
 
 ### TODO
 1. Use src when alphaVideo option is not set and alpha channel video is supported.
-2. See if changing .option attribute values changes real-time.
-3. Fallback if no video sources are added.
+2. Fallback if no video sources are added.
