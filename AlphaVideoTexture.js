@@ -248,8 +248,8 @@ AlphaVideoTexture.prototype = Object.assign( Object.create( THREE.Texture.protot
 		
 		if ( video.readyState >= video.HAVE_CURRENT_DATA ) {
             
-      this.processPixels( video, this.options.size.width, this.options.size.height );
-      if ( this.image ) this.needsUpdate = true;
+			this.processPixels( video, this.options.size.width, this.options.size.height );
+			if ( this.image ) this.needsUpdate = true;
 
 		}
 
