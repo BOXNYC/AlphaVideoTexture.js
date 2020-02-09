@@ -8,7 +8,7 @@ if ( typeof THREE === 'undefined' ) {
   eval("import { Texture } from './Texture.js';");
 }
 
-AlphaVideoTextureImageTexture = {
+THREE.AlphaVideoTextureImageTexture = {
   
   VIDEO: 'VIDEO',
   
@@ -18,7 +18,7 @@ AlphaVideoTextureImageTexture = {
   
 };
 
-function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy ) {
+THREE.AlphaVideoTexture = function( src, options, mapping, wrapS, wrapT, magFilter, minFilter, format, type, anisotropy ) {
   
   // Process Arguments:
   
@@ -30,7 +30,7 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
   options = options || {};
   options.renderEvery = options.renderEvery || 1;
   options.quality = options.quality || 1.0;
-  options.fallbackImageTexture = options.fallbackImageTexture || AlphaVideoTextureImageTexture.DATA;
+  options.fallbackImageTexture = options.fallbackImageTexture || THREE.AlphaVideoTextureImageTexture.DATA;
   options.antialiasData = typeof options.antialiasData === 'undefined' ? true : options.antialiasData;
   options.size = processSize( options.size || { width: 512, height: 512} );
   
@@ -92,7 +92,7 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
         bufferCanvas.height = height * 2;
         buffer = bufferCanvas.getContext( '2d' );
         
-        if ( this.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
+        if ( this.imageTexture == THREE.AlphaVideoTextureImageTexture.CANVAS ) {
           
           displayCanvas = document.createElement( 'canvas' );
           displayCanvas.width = width
@@ -113,11 +113,11 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
       for (i = 3, len = image.data.length; i < len; i = i + 4)
         image.data[i] = Math.max( alphaData[i - 1], alphaData[i - 2], alphaData[i - 3] );
       
-      if ( this.imageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
+      if ( this.imageTexture == THREE.AlphaVideoTextureImageTexture.CANVAS ) {
         
         display.putImageData( image, 0, 0, 0, 0, width, height );
         
-      } else if ( this.imageTexture == AlphaVideoTextureImageTexture.DATA ) {
+      } else if ( this.imageTexture == THREE.AlphaVideoTextureImageTexture.DATA ) {
         
         var data = new Uint8Array( image.data.buffer );
         this.image = { data: data || null, width: width || 1, height: height || 1 };
@@ -228,9 +228,9 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
     
     this.video.innerHTML = sources;
     
-    if ( options.fallbackImageTexture == AlphaVideoTextureImageTexture.CANVAS ) {
+    if ( options.fallbackImageTexture == THREE.AlphaVideoTextureImageTexture.CANVAS ) {
       
-      this.imageTexture = AlphaVideoTextureImageTexture.CANVAS;
+      this.imageTexture = THREE.AlphaVideoTextureImageTexture.CANVAS;
       
       this.processPixels();
       
@@ -239,9 +239,9 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
       
       this.needsUpdate = true;
     
-    } else if ( options.fallbackImageTexture == AlphaVideoTextureImageTexture.DATA ) {
+    } else if ( options.fallbackImageTexture == THREE.AlphaVideoTextureImageTexture.DATA ) {
       
-      this.imageTexture = AlphaVideoTextureImageTexture.DATA;
+      this.imageTexture = THREE.AlphaVideoTextureImageTexture.DATA;
       
       AlphaVideoTexture.prototype.isDataTexture = true;
       THREE.Texture.call( this, null, mapping, wrapS, wrapT, magFilter, minFilter, THREE.RGBAFormat, type, anisotropy );
@@ -264,7 +264,7 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
     
   } else {
     
-    this.imageTexture = AlphaVideoTextureImageTexture.VIDEO;
+    this.imageTexture = THREE.AlphaVideoTextureImageTexture.VIDEO;
     
     this.video.innerHTML = '<source src="'+src.webmAlpha+'" type="video/webm">';
     this.video.removeAttribute('style');
@@ -279,9 +279,9 @@ function AlphaVideoTexture( src, options, mapping, wrapS, wrapT, magFilter, minF
 
 }
 
-AlphaVideoTexture.prototype = Object.assign( Object.create( THREE.Texture.prototype ), {
+THREE.AlphaVideoTexture.prototype = Object.assign( Object.create( THREE.Texture.prototype ), {
 
-  constructor: AlphaVideoTexture,
+  constructor: THREE.AlphaVideoTexture,
 
   isVideoTexture: true,
 
