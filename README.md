@@ -58,11 +58,11 @@ const options = {
   quality: 0.5,
   renderEvery: 3,
   loop: true,
-  fallbackImageTexture: AlphaVideoTextureImageTexture.DATA,
+  fallbackImageTexture: THREE.AlphaVideoTextureImageTexture.DATA,
   antialiasData: true,
   size: 512
 };
-const texture = new AlphaVideoTexture( videos, options );
+const texture = new THREE.AlphaVideoTexture( videos, options );
 ```
 ## TODO
 1. Needed tests:
