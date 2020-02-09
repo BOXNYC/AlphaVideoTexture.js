@@ -1,5 +1,5 @@
 # Three.js / AlphaVideoTexture.js
-Three.js Alpha Channel Video Texture. Renders a VideoTexture when alpha channel is supported, otherwise uses the SeeThru method.
+Three.js Alpha Channel Video Texture. Renders a VideoTexture with transparency. When playing in a browser supporting alpha channel, will simply play the alpha channel video, otherwise plays opaque videos while generating transparent pixels using the SeeThru method.
 
 ## SeeThru
 https://github.com/m90/seeThru
