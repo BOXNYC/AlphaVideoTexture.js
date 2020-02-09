@@ -71,7 +71,7 @@ const texture = new THREE.AlphaVideoTexture( videos, options );
    - Windows Edge
 
 ## Tests
-- MacOS 10.14.6 √
+- MacOS 10.14.6
   - Chrome 80.0.3987.87 √
   - FireFox 72.0.2 √
   - Safari 13.0.5 √
