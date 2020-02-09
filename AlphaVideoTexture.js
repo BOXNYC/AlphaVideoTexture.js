@@ -3,9 +3,9 @@
   **/
 
 if ( typeof THREE === 'undefined' ) {
+  
   THREE = window;
-  eval("import { RGBAFormat, LinearFilter, NearestFilter } from '../constants.js';");
-  eval("import { Texture } from './Texture.js';");
+
 }
 
 THREE.AlphaVideoTextureImageTexture = {
@@ -299,5 +299,3 @@ THREE.AlphaVideoTexture.prototype = Object.assign( Object.create( THREE.Texture.
   }
 
 } );
-
-if ( THREE == window ) eval("export { AlphaVideoTexture };");
