@@ -234,7 +234,7 @@ THREE.AlphaVideoTexture = function( src, options, mapping, wrapS, wrapT, magFilt
       
       this.processPixels();
       
-      AlphaVideoTexture.prototype.isCanvasTexture = true;
+      THREE.AlphaVideoTexture.prototype.isCanvasTexture = true;
       THREE.Texture.call( this, displayCanvas, mapping, wrapS, wrapT, magFilter, minFilter, THREE.RGBAFormat, type, anisotropy );
       
       this.needsUpdate = true;
@@ -243,7 +243,7 @@ THREE.AlphaVideoTexture = function( src, options, mapping, wrapS, wrapT, magFilt
       
       this.imageTexture = THREE.AlphaVideoTextureImageTexture.DATA;
       
-      AlphaVideoTexture.prototype.isDataTexture = true;
+      THREE.AlphaVideoTexture.prototype.isDataTexture = true;
       THREE.Texture.call( this, null, mapping, wrapS, wrapT, magFilter, minFilter, THREE.RGBAFormat, type, anisotropy );
       
       if ( options.antialiasData ) {
