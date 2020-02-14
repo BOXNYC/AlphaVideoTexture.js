@@ -12,7 +12,7 @@ options: [Object] Settings object.
   - videoElement: [HTMLVideoElement] The Video element you wish to render on the texture. Default is a dynamically generated tag, not inserted in the DOM.
   - renderEvery: [int] Determine how many frames get rendered. Example, set to 2 to rendere every other frame. Default 1.
   - quality: [float] 0.0 - 1.0 percent quality. Example, 0.5 is 50% quality. Warning, if the fallback imageTexture is DATA, the quality option must be set to a foldable percent, for example .75 .5, .25, .125, etc. If not, the texture will distort non-uniformly. Default 1.0.
-  - fallbackImageTexture: [string] Options: AlphaVideoTextureImageTexture.DATA & AlphaVideoTextureImageTexture.CANVAS. Explained below.
+  - (v0.1) fallbackImageTexture: [string] Options: AlphaVideoTextureImageTexture.DATA & AlphaVideoTextureImageTexture.CANVAS. Explained below.
   - antialiasData: [bool] If fallbackImageTexture is set to DATA, then antialias is set. Default true.
   - size: [Mixed] Sets the size of the rendered video texture. Posible format examples: 1024, [512,512], {width:1024,height:1024}, "512x512". Size and video size must be at a power of 2. Default 512x512;
   
