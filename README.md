@@ -56,7 +56,6 @@ const options = {
   quality: 0.5,
   renderEvery: 3,
   loop: true,
-  fallbackImageTexture: THREE.AlphaVideoTextureImageTexture.DATA,
   antialiasData: true,
   size: 512
 };
